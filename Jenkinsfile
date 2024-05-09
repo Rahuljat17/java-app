@@ -22,7 +22,7 @@ pipeline {
 			steps{
 				withCredentials([string(credentialsId: 'Docker_hub_id', variable: 'docker_hub_passwd_var')]) {
     					sh 'sudo docker login -u rahul9664 -p ${docker_hub_passwd_var}'
-					sh 'sudo docker push rahul9664/java-app:$BUILD-TAG'
+					sh 'sudo docker push rahul9664/java-app:$BUILD_TAG'
 				}
 			}
 		}
