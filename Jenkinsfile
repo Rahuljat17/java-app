@@ -50,7 +50,7 @@ pipeline {
 		}
 		stage ("Prod ENV"){
 			steps{
-				sshagent(credentials:['docker-cloud']) {
+				sshagent(credentials:['node-1']) {
 			    	 	sh 'ssh -o StrictHostKeyChecking=no ubuntu@65.2.34.7 sudo docker run  -dit  -p  :8080  rahul9664/java-app:$BUILD_TAG'
 				}
 			}
