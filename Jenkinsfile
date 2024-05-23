@@ -35,7 +35,7 @@ pipeline {
 			steps{
 				retry(7){
 					script{
-						sh 'sudo curl --silent http://13.201.132.89:8090/java-web-app/ | grep -i -E "(india|sr)"'
+						sh 'sudo curl --silent http://13.233.136.225:8090/java-web-app/ | grep -i -E "(india|sr)"'
 					}
 				}
 			}
@@ -50,8 +50,8 @@ pipeline {
 		}
 		stage ("Prod ENV"){
 			steps{
-				sshagent(credentials:['node-1']) {
-			    	 	sh 'ssh -o StrictHostKeyChecking=no ubuntu@65.2.31.89 sudo docker run  -dit  -p  :8080  rahul9664/java-app:$BUILD_TAG'
+				sshagent(credentials:['docker-cloud']) {
+			    	 	sh 'ssh -o StrictHostKeyChecking=no ubuntu@65.2.34.7 sudo docker run  -dit  -p  :8080  rahul9664/java-app:$BUILD_TAG'
 				}
 			}
 		}
