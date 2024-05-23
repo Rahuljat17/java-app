@@ -20,7 +20,7 @@ pipeline {
 		}
 		stage ("Push on Docker-Hub"){
 			steps{
-				withCredentials([string(credentialsId: 'Docker_hub_id', variable: 'docker_hub_passwd_var')]) {
+				withCredentials([string(credentialsId: 'docker-hub-passwd', variable: 'docker-hub-id')]) {
     					sh 'sudo docker login -u rahul9664 -p ${docker_hub_passwd_var}'
 					sh 'sudo docker push rahul9664/java-app:$BUILD_TAG'
 				}
@@ -35,7 +35,7 @@ pipeline {
 			steps{
 				retry(7){
 					script{
-						sh 'sudo curl --silent http://35.154.162.25:8090/java-web-app/ | grep -i -E "(india|sr)"'
+						sh 'sudo curl --silent http://13.201.132.89:8090/java-web-app/ | grep -i -E "(india|sr)"'
 					}
 				}
 			}
@@ -51,7 +51,7 @@ pipeline {
 		stage ("Prod ENV"){
 			steps{
 				sshagent(credentials:['node-1']) {
-			    	 	sh 'ssh -o StrictHostKeyChecking=no ubuntu@35.154.162.25 sudo docker run  -dit  -p  :8080  rahul9664/java-app:$BUILD_TAG'
+			    	 	sh 'ssh -o StrictHostKeyChecking=no ubuntu@65.2.31.89 sudo docker run  -dit  -p  :8080  rahul9664/java-app:$BUILD_TAG'
 				}
 			}
 		}
